@@ -266,7 +266,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/有趣/" style="font-size: 10px;">有趣</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/转载/" style="font-size: 20px;">转载</a>
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JobScheduler/" style="font-size: 10px;">JobScheduler</a> <a href="/tags/webservic/" style="font-size: 10px;">webservic</a> <a href="/tags/有趣/" style="font-size: 10px;">有趣</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/转载/" style="font-size: 20px;">转载</a>
 					</div>
 				</section>
 				
@@ -491,6 +491,150 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Android-5-0的调度作业JobScheduler" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/15/Android-5-0的调度作业JobScheduler/" class="article-date">
+  	<time datetime="2015-08-14T16:10:46.000Z" itemprop="datePublished">2015-08-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/15/Android-5-0的调度作业JobScheduler/">Android 5.0的调度作业JobScheduler</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Android 5.0 提供了一个新的 JobScheduler API，它允许您通过为系统定义要在以后的某个时间或在指定的条件下（例如，当设备在充电时）异步运行的作业来优化电池寿命。<br>首先看一下官方<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html" target="_blank" rel="external">JobScheduler的API</a>  </p>
+<blockquote>
+<p>This is an API for scheduling various types of jobs against the framework that will be executed in your application’s own process.</p>
+</blockquote>
+<p>这是一个API调度框架，将在您的应用程序的进程中执行的工作。</p>
+<blockquote>
+<p>See JobInfo for more description of the types of jobs that can be run and how to construct them. You will construct these JobInfo objects and pass them to the JobScheduler with schedule(JobInfo). When the criteria declared are met, the system will execute this job on your application’s JobService. You identify which JobService is meant to execute the logic for your job when you create the JobInfo with JobInfo.Builder(int, android.content.ComponentName).</p>
+</blockquote>
+<p>看到Jobinfo的更多的描述类型的工作，可以运行，以及如何构建。你可以构造这些JobInfo对象，并且使用schedule(JobInfo)在JobScheduler。</p>
+<p>当符合标准声明，系统将执行调度在你的应用程序Jobservice。</p>
+<blockquote>
+<p>The framework will be intelligent about when you receive your callbacks, and attempt to batch and defer them as much as possible. Typically if you don’t specify a deadline on your job, it can be run at any moment depending on the current state of the JobScheduler’s internal queue, however it might be deferred as long as until the next time the device is connected to a power source.<br>You do not instantiate this class directly; instead, retrieve it through Context.getSystemService(Context.JOB_SCHEDULER_SERVICE).</p>
+</blockquote>
+<p>作业调度在下列情况下非常有用：</p>
+<ul>
+<li>应用具有您可以推迟的非面向用户的工作。</li>
+<li>应用具有当插入设备时您希望优先执行的工作。</li>
+<li>应用具有需要访问网络或 Wi-Fi 连接的任务。</li>
+<li>应用具有您希望作为一个批次定期运行的许多任务。  </li>
+</ul>
+<p>使用 JobInfo.Builder 类配置调度的任务应当如何运行。您可以将任务调度为在特定的条件下运行，例如：</p>
+<ul>
+<li>当设备充电时启动</li>
+<li>当设备连接到不限流量网络时启动</li>
+<li>当设备空闲时启动</li>
+<li>在特定的截止期限之前或以最小的延迟完成  </li>
+</ul>
+<p>例如，您可以添加如下代码以在不限流量网络上运行您的任务：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JobInfo uploadTask = <span class="keyword">new</span> JobInfo.Builder(mJobId,</span><br><span class="line">                                         mServiceComponent <span class="comment">/* JobService component */</span>)</span><br><span class="line">        .setRequiredNetworkCapabilities(JobInfo.NetworkType.UNMETERED)</span><br><span class="line">        .build();</span><br><span class="line">JobScheduler jobScheduler =</span><br><span class="line">        (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);</span><br><span class="line">jobScheduler.schedule(uploadTask);</span><br></pre></td></tr></table></figure></p>
+<p>如果设备具有稳定的电源（也就是说，它已插入了 2 分钟以上并且电池处于健康水平），则系统将运行任何已就绪可运行的已调度作业，即使作业的截止期限尚未到期也是如此。</p>
+<p>这里可以在看一下官方给出的 <a href="https://developer.android.com/reference/android/app/job/JobService.html" target="_blank" rel="external">JobService API</a></p>
+<p>详细代码见Android SDK给出的Sample。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JobScheduler/">JobScheduler</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-CXF-SSH搭建webservice" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/14/CXF-SSH搭建webservice/" class="article-date">
+  	<time datetime="2015-08-14T15:28:56.000Z" itemprop="datePublished">2015-08-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/14/CXF-SSH搭建webservice/">Apache CXF+SSH搭建webservice</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="准备工作"><strong>准备工作</strong></h2><p>首先要去Apache 网站下载CXF jar包,structs2、spring、hibernate的库可以自己下载，如果是用myeclipse用集成的也可以。 关于Apache CXF 所必须要使用的Jar包如果嫌麻烦可以直接把libs里的文件全部拷出来，如果和SSH里重复了移除就好，这里就不再多说了。</p>
+<h2 id="集成环境"><strong>集成环境</strong></h2><p>进入正题，当把所有依赖的jar包都准备完成的时候，把所有jar文件复制到WEB-INI/lib目录里即可。 建立spring的配置文件applicationContext.xml： 内容如下<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Apache/">Apache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webservic/">webservic</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/08/14/CXF-SSH搭建webservice/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-让博客High一下" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -517,8 +661,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>对于 Hexo 用户，可以这样做：<br>在<strong>Hexo/themes/light/layout/_partial/header.ejs</strong>中的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;ul&#62;</span><br></pre></td></tr></table></figure></p>
-<p>标签内部，增加一对<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;li&#62;</span><br></pre></td></tr></table></figure></p>
+        <p>对于 Hexo 用户，可以这样做：<br>在<strong>Hexo/themes/light/layout/_partial/header.ejs</strong>中的<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>标签内部，增加一对<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">li</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>标签，并把如下内容拷贝进去：</p>
 <h2 id="<!-more->">
       

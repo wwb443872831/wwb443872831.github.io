@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Apache CXF+SSH搭建webservice | WebbWang的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="准备工作首先要去Apache 网站下载CXF jar包,structs2、spring、hibernate的库可以自己下载，如果是用myeclipse用集成的也可以。 关于Apache CXF 所必须要使用的Jar包如果嫌麻烦可以直接把libs里的文件全部拷出来，如果和SSH里重复了移除就好，这里就不再多说了。
+集成环境进入正题，当把所有依赖的jar包都准备完成的时候，把所有jar文件复制到WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache CXF+SSH搭建webservice">
+<meta property="og:url" content="http://yoursite.com/2015/08/14/CXF-SSH搭建webservice/index.html">
+<meta property="og:site_name" content="WebbWang的博客">
+<meta property="og:description" content="准备工作首先要去Apache 网站下载CXF jar包,structs2、spring、hibernate的库可以自己下载，如果是用myeclipse用集成的也可以。 关于Apache CXF 所必须要使用的Jar包如果嫌麻烦可以直接把libs里的文件全部拷出来，如果和SSH里重复了移除就好，这里就不再多说了。
+集成环境进入正题，当把所有依赖的jar包都准备完成的时候，把所有jar文件复制到WEB">
+<meta property="og:updated_time" content="2015-08-14T15:59:36.896Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apache CXF+SSH搭建webservice">
+<meta name="twitter:description" content="准备工作首先要去Apache 网站下载CXF jar包,structs2、spring、hibernate的库可以自己下载，如果是用myeclipse用集成的也可以。 关于Apache CXF 所必须要使用的Jar包如果嫌麻烦可以直接把libs里的文件全部拷出来，如果和SSH里重复了移除就好，这里就不再多说了。
+集成环境进入正题，当把所有依赖的jar包都准备完成的时候，把所有jar文件复制到WEB">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/assets/head_icon.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Webb Wang</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+
+
+
+
+
+<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+
+
+
+
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/wwb443872831" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/2381231837" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/wwb999" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="https://plus.google.com/112389409065829491938/about" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/WWB999" title="twitter">twitter</a>
+					        
+								<a class="linkedin" target="_blank" href="https://cn.linkedin.com/in/webbwang" title="linkedin">linkedin</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JobScheduler/" style="font-size: 10px;">JobScheduler</a> <a href="/tags/webservic/" style="font-size: 10px;">webservic</a> <a href="/tags/有趣/" style="font-size: 10px;">有趣</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/转载/" style="font-size: 20px;">转载</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">错的不是我们而是这个世界</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Webb Wang</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/assets/head_icon.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Webb Wang</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+
+
+
+
+
+<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+
+
+
+
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wwb443872831" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2381231837" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/wwb999" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="https://plus.google.com/112389409065829491938/about" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/WWB999" title="twitter">twitter</a>
+			        
+						<a class="linkedin" target="_blank" href="https://cn.linkedin.com/in/webbwang" title="linkedin">linkedin</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-CXF-SSH搭建webservice" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/14/CXF-SSH搭建webservice/" class="article-date">
+  	<time datetime="2015-08-14T15:28:56.000Z" itemprop="datePublished">2015-08-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Apache CXF+SSH搭建webservice
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Apache/">Apache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webservic/">webservic</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="准备工作"><strong>准备工作</strong></h2><p>首先要去Apache 网站下载CXF jar包,structs2、spring、hibernate的库可以自己下载，如果是用myeclipse用集成的也可以。 关于Apache CXF 所必须要使用的Jar包如果嫌麻烦可以直接把libs里的文件全部拷出来，如果和SSH里重复了移除就好，这里就不再多说了。</p>
+<h2 id="集成环境"><strong>集成环境</strong></h2><p>进入正题，当把所有依赖的jar包都准备完成的时候，把所有jar文件复制到WEB-INI/lib目录里即可。 建立spring的配置文件applicationContext.xml： 内容如下<br><a id="more"></a><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">beans</span> <span class="attribute">xmlns</span>=<span class="value">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">  <span class="attribute">xmlns:jaxws</span>=<span class="value">"http://cxf.apache.org/jaxws"</span> 	  <span class="attribute">xmlns:soap</span>=<span class="value">"http://cxf.apache.org/bindings/soap"</span></span><br><span class="line">  <span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span> 	    <span class="attribute">xmlns:p</span>=<span class="value">"http://www.springframework.org/schema/p"</span></span><br><span class="line">  <span class="attribute">xsi:schemaLocation</span>=<span class="value">"</span><br><span class="line">      http://www.springframework.org/schema/beans </span><br><span class="line">      http://www.springframework.org/schema/beans/spring-beans-3.1.xsd</span><br><span class="line">      http://cxf.apache.org/bindings/soap </span><br><span class="line">      http://cxf.apache.org/schemas/configuration/soap.xsd   </span><br><span class="line">      http://cxf.apache.org/jaxws   </span><br><span class="line">      http://cxf.apache.org/schemas/jaxws.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">import</span> <span class="attribute">resource</span>=<span class="value">"classpath:META-INF/cxf/cxf.xml"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">import</span> <span class="attribute">resource</span>=<span class="value">"classpath:META-INF/cxf/cxf-extension-soap.xml"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">import</span> <span class="attribute">resource</span>=<span class="value">"classpath:META-INF/cxf/cxf-servlet.xml"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"dataSource"</span></span><br><span class="line">      <span class="attribute">class</span>=<span class="value">"org.springframework.jdbc.datasource.DriverManagerDataSource"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"driverClassName"</span> <span class="attribute">value</span>=<span class="value">"com.mysql.jdbc.Driver"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"url"</span> <span class="attribute">value</span>=<span class="value">"jdbc:mysql://localhost:3306/memo"</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"username"</span> <span class="attribute">value</span>=<span class="value">"root"</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"password"</span> <span class="attribute">value</span>=<span class="value">"root"</span>&gt;</span><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"sessionFactory"</span></span><br><span class="line">      <span class="attribute">class</span>=<span class="value">"org.springframework.orm.hibernate3.LocalSessionFactoryBean"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"dataSource"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">ref</span> <span class="attribute">bean</span>=<span class="value">"dataSource"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"hibernateProperties"</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">props</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="title">prop</span> <span class="attribute">key</span>=<span class="value">"hibernate.dialect"</span>&gt;</span></span><br><span class="line">                 org.hibernate.dialect.MySQLDialect</span><br><span class="line">              <span class="tag">&lt;/<span class="title">prop</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="title">props</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--这里主要是hibernate的映射文件的地方 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"mappingResources"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">list</span>&gt;</span></span><br><span class="line">             <span class="tag">&lt;<span class="title">value</span>&gt;</span>domain/SystemManagement/Account.hbm.xml<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="title">list</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>数据库源部分根据各自情况配置吧主要就是url、username以及password PS:因为这里使用spring来管理hibernate所以hibernate的配置文件可以省略了不用单独再配置了。 接下来在web.xml里配置spring的监听器以及启动CXF的servelt代码如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">web-app</span> <span class="attribute">version</span>=<span class="value">"3.0"</span> <span class="attribute">xmlns</span>=<span class="value">"http://java.sun.com/xml/ns/javaee"</span></span><br><span class="line">  <span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">  <span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://java.sun.com/xml/ns/javaee </span><br><span class="line">  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">display-name</span>&gt;</span>webservice_cxf<span class="tag">&lt;/<span class="title">display-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">context-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">param-value</span>&gt;</span>classpath:applicationContext.xml<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">context-param</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="title">listener</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="title">listener-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">listener</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- CXF Servlet --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>CXFServlet<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>org.apache.cxf.transport.servlet.CXFServlet<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="title">load-on-startup</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">servlet-mapping</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>CXFServlet<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="title">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">servlet-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="title">welcome-file-list</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">welcome-file</span>&gt;</span>index.jsp<span class="tag">&lt;/<span class="title">welcome-file</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">welcome-file-list</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>环境配置到此结束下面就是实现功能。</p>
+<p>功能实现<br>=</p>
+<p>首先建立domain包用于放实体，这里我以简单的登陆用例说明 Account.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractAccount</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Fields</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> String tel;</span><br><span class="line">  <span class="keyword">private</span> String pwd;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Constructors</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/** default constructor */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">AbstractAccount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** minimal constructor */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">AbstractAccount</span><span class="params">(String tel)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.tel = tel;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** full constructor */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">AbstractAccount</span><span class="params">(String tel, String pwd)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.tel = tel;</span><br><span class="line">      <span class="keyword">this</span>.pwd = pwd;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Property accessors</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getTel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.tel;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTel</span><span class="params">(String tel)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.tel = tel;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getPwd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.pwd;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPwd</span><span class="params">(String pwd)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.pwd = pwd;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>同时配置好hibernate的映射<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"</span><br><span class="line">"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- </span><br><span class="line">    Mapping file autogenerated by MyEclipse Persistence Tools</span><br><span class="line">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">hibernate-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">class</span> <span class="attribute">name</span>=<span class="value">"com.demo.domain.Account"</span> <span class="attribute">table</span>=<span class="value">"account"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">id</span> <span class="attribute">name</span>=<span class="value">"tel"</span> <span class="attribute">type</span>=<span class="value">"java.lang.String"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">column</span> <span class="attribute">name</span>=<span class="value">"tel"</span> <span class="attribute">length</span>=<span class="value">"13"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">generator</span> <span class="attribute">class</span>=<span class="value">"assigned"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"pwd"</span> <span class="attribute">type</span>=<span class="value">"java.lang.String"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">column</span> <span class="attribute">name</span>=<span class="value">"pwd"</span> <span class="attribute">length</span>=<span class="value">"17"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">hibernate-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>再建立service用以处理业务逻辑<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demo.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.jws.WebParam;</span><br><span class="line"><span class="keyword">import</span> javax.jws.WebService;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@WebService</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ISystemManagementService</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">login</span><span class="params">(@WebParam(name = <span class="string">"tel"</span>)</span> String tel,</span><br><span class="line">          @<span class="title">WebParam</span><span class="params">(name = <span class="string">"pwd"</span>)</span> String pwd)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">register</span><span class="params">(@WebParam(name = <span class="string">"tel"</span>)</span> String tel,</span><br><span class="line">          @<span class="title">WebParam</span><span class="params">(name = <span class="string">"pwd"</span>)</span> String pwd)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.demo.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.demo.domain.Account;</span><br><span class="line"><span class="keyword">import</span> com.demo.domain.AccountDAO;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SystemManagementService</span> <span class="keyword">implements</span> <span class="title">ISystemManagementService</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> AccountDAO accountDAO;</span><br><span class="line">  <span class="keyword">private</span> ApplicationContext ctx;</span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">login</span><span class="params">(String tel, String pwd)</span> </span>&#123;</span><br><span class="line">      ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"applicationContext.xml"</span>);</span><br><span class="line">      accountDAO = AccountDAO.getFromApplicationContext(ctx);</span><br><span class="line">      Account account = accountDAO.findById(tel);</span><br><span class="line">      <span class="keyword">if</span>(account!=<span class="keyword">null</span>)&#123;</span><br><span class="line">          <span class="keyword">if</span>(account.getPwd().equals(pwd))</span><br><span class="line">              <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">register</span><span class="params">(String tel, String pwd)</span> </span>&#123;</span><br><span class="line">      ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"applicationContext.xml"</span>);</span><br><span class="line">      accountDAO = AccountDAO.getFromApplicationContext(ctx);</span><br><span class="line">      Account account = <span class="keyword">new</span> Account();</span><br><span class="line">      account.setTel(tel);</span><br><span class="line">      account.setPwd(pwd);</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          accountDAO.save(account);</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>写完后在spring的配置文件中配置CXF的bean就可以正常利用spring注入数据源等<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- SystemManagerment --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"SystemManagement"</span> <span class="attribute">class</span>=<span class="value">"com.demo.service.SystemManagementService"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">jaxws:server</span> <span class="attribute">id</span>=<span class="value">"management"</span></span><br><span class="line">      <span class="attribute">serviceClass</span>=<span class="value">"com.demo.service.ISystemManagementService"</span> <span class="attribute">address</span>=<span class="value">"/SystemManagement"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">jaxws:serviceBean</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">ref</span> <span class="attribute">bean</span>=<span class="value">"SystemManagement"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">jaxws:serviceBean</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">jaxws:server</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>当用localhost访问出现wsdl文档是说明webservice搭建成功。 关于structs2的集成只需要在structs2的配置文件里加上<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">constant</span> <span class="attribute">name</span>=<span class="value">"struts.objectFactory"</span> <span class="attribute">value</span>=<span class="value">"spring"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在web.xml里加上<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">filter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">filter-name</span>&gt;</span>struts2<span class="tag">&lt;/<span class="title">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">filter-class</span>&gt;</span></span><br><span class="line">          org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</span><br><span class="line">      <span class="tag">&lt;/<span class="title">filter-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">filter</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">filter-mapping</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">filter-name</span>&gt;</span>struts2<span class="tag">&lt;/<span class="title">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="title">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>即可，至于struct2的用法这里就不说明啦</p>
+<p><strong><a href="http://blog.ahhxgq.com/blog/2014/04/08/webservice/" target="_blank" rel="external">原帖地址</a></strong></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/08/15/Android-5-0的调度作业JobScheduler/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Android 5.0的调度作业JobScheduler
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/08/14/让博客High一下/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">让博客High一下</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="CXF-SSH搭建webservice" data-title="Apache CXF+SSH搭建webservice" data-url="http://yoursite.com/2015/08/14/CXF-SSH搭建webservice/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wwb443872831"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 Webb Wang
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
