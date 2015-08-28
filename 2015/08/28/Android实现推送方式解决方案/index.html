@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android实现推送方式解决方案 | WebbWang的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文介绍在Android中实现推送方式的基础知识及相关解决方案。推送功能在手机开发中应用的场景是越来起来了，不说别的，就我们手机上的新闻客户端就时不j时的推送过来新的消息，很方便的阅读最新的新闻信息。这种推送功能是好的一面，但是也会经常看到很多推送过来的垃圾信息，这就让我们感到厌烦了，关于这个我们就不能多说什么了，毕竟很多商家要做广告。本文就是来探讨下Android中实现推送功能的一些解决方案，也">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android实现推送方式解决方案">
+<meta property="og:url" content="http://yoursite.com/2015/08/28/Android实现推送方式解决方案/index.html">
+<meta property="og:site_name" content="WebbWang的博客">
+<meta property="og:description" content="本文介绍在Android中实现推送方式的基础知识及相关解决方案。推送功能在手机开发中应用的场景是越来起来了，不说别的，就我们手机上的新闻客户端就时不j时的推送过来新的消息，很方便的阅读最新的新闻信息。这种推送功能是好的一面，但是也会经常看到很多推送过来的垃圾信息，这就让我们感到厌烦了，关于这个我们就不能多说什么了，毕竟很多商家要做广告。本文就是来探讨下Android中实现推送功能的一些解决方案，也">
+<meta property="og:image" content="http://yoursite.com/assets/img_blog01.png">
+<meta property="og:image" content="http://yoursite.com/assets/img_blog02.png">
+<meta property="og:image" content="http://yoursite.com/assets/img_blog03.png">
+<meta property="og:image" content="http://yoursite.com/assets/img_blog04.png">
+<meta property="og:updated_time" content="2015-08-28T06:51:47.012Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android实现推送方式解决方案">
+<meta name="twitter:description" content="本文介绍在Android中实现推送方式的基础知识及相关解决方案。推送功能在手机开发中应用的场景是越来起来了，不说别的，就我们手机上的新闻客户端就时不j时的推送过来新的消息，很方便的阅读最新的新闻信息。这种推送功能是好的一面，但是也会经常看到很多推送过来的垃圾信息，这就让我们感到厌烦了，关于这个我们就不能多说什么了，毕竟很多商家要做广告。本文就是来探讨下Android中实现推送功能的一些解决方案，也">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/assets/head_icon.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Webb Wang</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+
+
+
+
+
+<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+
+
+
+
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/wwb443872831" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/2381231837" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/wwb999" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="https://plus.google.com/112389409065829491938/about" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/WWB999" title="twitter">twitter</a>
+					        
+								<a class="linkedin" target="_blank" href="https://cn.linkedin.com/in/webbwang" title="linkedin">linkedin</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JobScheduler/" style="font-size: 10px;">JobScheduler</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/webservic/" style="font-size: 10px;">webservic</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/切换动画/" style="font-size: 10px;">切换动画</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/有趣/" style="font-size: 10px;">有趣</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/转载/" style="font-size: 15px;">转载</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">错的不是我们而是这个世界</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Webb Wang</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/assets/head_icon.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Webb Wang</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+
+
+
+
+
+<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+
+
+
+
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wwb443872831" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2381231837" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/wwb999" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="https://plus.google.com/112389409065829491938/about" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/WWB999" title="twitter">twitter</a>
+			        
+						<a class="linkedin" target="_blank" href="https://cn.linkedin.com/in/webbwang" title="linkedin">linkedin</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Android实现推送方式解决方案" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/28/Android实现推送方式解决方案/" class="article-date">
+  	<time datetime="2015-08-28T06:27:49.000Z" itemprop="datePublished">2015-08-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android实现推送方式解决方案
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/推送/">推送</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文介绍在Android中实现推送方式的基础知识及相关解决方案。推送功能在手机开发中应用的场景是越来起来了，不说别的，就我们手机上的新闻客户端就时不j时的推送过来新的消息，很方便的阅读最新的新闻信息。这种推送功能是好的一面，但是也会经常看到很多推送过来的垃圾信息，这就让我们感到厌烦了，关于这个我们就不能多说什么了，毕竟很多商家要做广告。本文就是来探讨下Android中实现推送功能的一些解决方案，也希望能够起到抛砖引玉的作用。<br><a id="more"></a></p>
+<h3 id="1-推送方式基础知识：">1.推送方式基础知识：</h3><p>在移动互联网时代以前的手机，如果有事情发生需要通知用户，则会有一个窗口弹出，将告诉用户正在发生什么事情。可能是未接电话的提示，日历的提醒，或是一封新的彩信。推送功能最早是被用于Email中，用来提示我们新的信息。由于时代的发展和移动互联网的热潮，推送功能更加地普及，已经不再仅仅用在推送邮件了，更多地用在我们的APP中了。</p>
+<p>当我们开发需要和服务器交互的应用程序时，基本上都需要获取服务器端的数据，比如《地震应急通》就需要及时获取服务器上最新的地震信息。要获取服务器上不定时更新的信息，一般来说有两种方法：第一种是客户端使用Pull（拉）的方式，就是隔一段时间就去服务器上获取一下信息，看是否有更新的信息出现。第二种就是 服务器使用Push（推送）的方式，当服务器端有新信息了，则把最新的信息Push到客户端上。这样，客户端就能自动的接收到消息。 </p>
+<p>虽然Pull和Push两种方式都能实现获取服务器端更新信息的功能，但是明显来说Push方式比Pull方式更优越。因为Pull方式更费客户端的网络流量，更主要的是费电量，还需要我们的程序不停地去监测服务端的变化。</p>
+<p>在开发Android和iPhone应用程序时，我们往往需要从服务器不定的向手机客户端即时推送各种通知消息。我们只需要在Android或IPhone的通知栏处向下一拉，就展开了Notification Panel，可以集中一览各种各样通知消息。目前IOS平台上已经有了比较简单的和完美的推送通知解决方案，我会在以后详细介绍IPhone中的解决方案，可是Android平台上实现起来却相对比较麻烦。<br>最近利用几天的时间对Android的推送通知服务进行初步的研究，也希望能和大家共同探讨一下。</p>
+<h3 id="2-几种常见的解决方案实现原理：">2.几种常见的解决方案实现原理：</h3><ul>
+<li><p>1）轮询(Pull)方式：应用程序应当阶段性的与服务器进行连接并查询是否有新的消息到达，你必须自己实现与服务器之间的通信，例如消息排队等。而且你还要考虑轮询的频率，如果太慢可能导致某些消息的延迟，如果太快，则会大量消耗网络带宽和电池。</p>
+</li>
+<li><p>2）SMS(Push)方式：在Android平台上，你可以通过拦截SMS消息并且解析消息内容来了解服务器的意图，并获取其显示内容进行处理。这是一个不错的想法，我就见过采用这个方案的应用程序。这个方案的好处是，可以实现完全的实时操作。但是问题是这个方案的成本相对比较高，我们需要向移动公司缴纳相应的费用。我们目前很难找到免费的短消息发送网关来实现这种方案。</p>
+</li>
+<li><p>3）持久连接(Push)方式：这个方案可以解决由轮询带来的性能问题，但是还是会消耗手机的电池。IOS平台的推送服务之所以工作的很好，是因为每一台手机仅仅保持一个与服务器之间的连接，事实上C2DM也是这么工作的。不过刚才也讲了，这个方案存在着很多的不足之处，就是我们很难在手机上实现一个可靠的服务，目前也无法与IOS平台的推送功能相比。</p>
+</li>
+</ul>
+<p>Android操作系统允许在低内存情况下杀死系统服务，所以我们的推送通知服务很有可能就被操作系统Kill掉了。 轮询(Pull)方式和SMS(Push)方式这两个方案也存在明显的不足。至于持久连接(Push)方案也有不足，不过我们可以通过良好的设计来弥补，以便于让该方案可以有效的工作。毕竟，我们要知道GMail，GTalk以及GoogleVoice都可以实现实时更新的。</p>
+<h3 id="3-第一种解决方案：C2DM云端推送功能。">3.第一种解决方案：C2DM云端推送功能。</h3><p>在Android手机平台上，Google提供了C2DM（Cloudto Device Messaging）服务，起初我就是准备采用这个服务来实现自己手机上的推送功能，并将其带入自己的项目中。<br>Android Cloud to Device Messaging (C2DM)是一个用来帮助开发者从服务器向Android应用程序发送数据的服务。该服务提供了一个简单的、轻量级的机制，允许服务器可以通知移动应用程序直接与服务器进行通信，以便于从服务器获取应用程序更新和用户数据。C2DM服务负责处理诸如消息排队等事务并向运行于目标设备上的应用程序分发这些消息。关于C2DM具体使用过程，大家可以去查阅相关的资料，在这里先让我们了解下大致方案情况。</p>
+<p>下面是C2DM操作过程示例图:<br><img src="/assets/img_blog01.png" alt=""></p>
+<p>但是经过一番研究发现，这个服务存在很大的问题：  </p>
+<ul>
+<li><p>1）C2DM内置于Android的2.2系统上，无法兼容老的1.6到2.1系统;</p>
+</li>
+<li><p>2）C2DM需要依赖于Google官方提供的C2DM服务器，由于国内的网络环境，这个服务经常不可用，如果想要很好的使用，我们的App Server必须也在国外，这个恐怕不是每个开发者都能够实现的;</p>
+</li>
+<li><p>3)不像在iPhone中，他们把硬件系统集成在一块了。所以对于我们开发者来说，如果要在我们的应用程序中使用C2DM的推送功能，因为对于不同的这种硬件厂商平台，比如摩托罗拉、华为、中兴做一个手机，他们可能会把Google的这种服务去掉，尤其像在国内就很多这种，把Google这种原生的服务去掉。买了一些像什么山寨机或者是华为这种国产机，可能Google的服务就没有了。而像在国外出的那些可能会内置。</p>
+</li>
+</ul>
+<p>有了上述几个方面的制约，导致我最终放弃了这个方案，不过我想利用另外一篇文章来详细的介绍C2DM的框架以及客户端和App Server的相应设置方法，可以作为学习资源让我们有个参考的资料。  即然C2DM无法满足我们的要求，那么我们就需要自己来实现Android手机客户端与App Server之间的通信协议，保证在App Server想向指定的Android设备发送消息时，Android设备能够及时的收到。</p>
+<h3 id="4-_第二种解决方案：MQTT协议实现Android推送功能。">4. 第二种解决方案：MQTT协议实现Android推送功能。</h3><p>采用MQTT协议实现Android推送功能也是一种解决方案。MQTT是一个轻量级的消息发布/订阅协议，它是实现基于手机客户端的消息推送服务器的理想解决方案。</p>
+<p>wmqtt.jar是IBM提供的MQTT协议的实现。我们可以从这里<a href="https://github.com/tokudu/AndroidPushNotificationsDemo" target="_blank" rel="external">https://github.com/tokudu/AndroidPushNotificationsDemo</a>下载该项目的实例代码，并且可以找到一个采用PHP书写的服务器端实现<a href="https://github.com/tokudu/PhpMQTTClient" target="_blank" rel="external">https://github.com/tokudu/PhpMQTTClient</a>。</p>
+<p>架构如下图所示：<br><img src="/assets/img_blog02.png" alt=""></p>
+<p>wmqtt.jar 是IBM提供的MQTT协议的实现。我们可以从如下站点下载<a href="http://www-01.ibm.com/support/docview.wss?rs=171&amp;uid=swg24006006" target="_blank" rel="external">http://www-01.ibm.com/support/docview.wss?rs=171&amp;uid=swg24006006</a>它。我们可以将该jar包加入自己的Android应用程序中。</p>
+<h3 id="5-第三种解决方案：RSMB实现推送功能。">5.第三种解决方案：RSMB实现推送功能。</h3><p>Really Small Message Broker (RSMB)，他是一个简单的MQTT代理，同样由IBM提供，其查看地址是：<a href="http://www.alphaworks.ibm.com/tech/rsmb" target="_blank" rel="external">http://www.alphaworks.ibm.com/tech/rsmb</a>。缺省打开1883端口，应用程序当中，它负责接收来自服务器的消息并将其转发给指定的移动设备。</p>
+<p>SAM是一个针对MQTT写的PHP库。我们可以从这个<a href="http://pecl.php.net/package/sam/download/0.2.0" target="_blank" rel="external">http://pecl.php.net/package/sam/download/0.2.0</a>地址下载它.</p>
+<p>send_mqtt.php是一个通过POST接收消息并且通过SAM将消息发送给RSMB的PHP脚本。</p>
+<h3 id="6-_第四种解决方案：XMPP协议实现Android推送功能。">6. 第四种解决方案：XMPP协议实现Android推送功能。</h3><p>这是我希望在项目中采用的方案，因为目前它是开源的，对于其简单的推送功能它还是能够实现的。我们可以修改其源代码来适应我们的应用程序。</p>
+<p>事实上Google官方的C2DM服务器底层也是采用XMPP协议进行的封装。XMPP(可扩展通讯和表示协议)是基于可扩展标记语言（XML）的协议，它用于即时消息（IM）以及在线探测。这个协议可能最终允许因特网用户向因特网上的其他任何人发送即时消息。关于XMPP协议我在上篇博文中已经介绍，大家可以参考下文章：<a href="http://www.cnblogs.com/hanyonglu/archive/2012/03/04/2378956.html" target="_blank" rel="external">http://www.cnblogs.com/hanyonglu/archive/2012/03/04/2378956.html</a></p>
+<p>androidpn是一个基于XMPP协议的java开源Android push notification实现，我会在以后的博文中详细介绍androidpn。它包含了完整的客户端和服务器端。经过源代码研究我发现，该服务器端基本是在另外一个开源工程openfire基础上修改实现的，不过比较郁闷的是androidpn的文档是由韩语写的，所以整个研究过程基本都是读源码。</p>
+<p>这是androidpn的项目主页：<a href="http://sourceforge.net/projects/androidpn/" target="_blank" rel="external">http://sourceforge.net/projects/androidpn/</a></p>
+<p>androidpn实现意图如下图所示：<br><img src="/assets/img_blog03.png" alt=""></p>
+<p>androidpn 客户端需要用到一个基于java的开源XMPP协议包asmack，这个包同样也是基于openfire下的另外一个开源项目smack，不过我们不需要自己编译，可以直接把androidpn客户端里面的asmack.jar拿来使用。客户端利用asmack中提供的XMPPConnection类与服 务器建立持久连接，并通过该连接进行用户注册和登录认证，同样也是通过这条连接，接收服务器发送的通知。</p>
+<p>androidpn服务器端也是java语言实现的，基于openfire开源工程，不过它的Web部分采用的是spring框架，这一点与 openfire是不同的。Androidpn服务器包含两个部分，一个是侦听在5222端口上的XMPP服务，负责与客户端的 XMPPConnection类进行通信，作用是用户注册和身份认证，并发送推送通知消息。另外一部分是Web服务器，采用一个轻量级的HTTP服务器， 负责接收用户的Web请求。服务器架构如下：<br><img src="/assets/img_blog04.png" alt=""></p>
+<p>最上层包含四个组成部分，分别是SessionManager，Auth Manager，PresenceManager以及Notification Manager。SessionManager负责管理客户端与服务器之间的会话，Auth Manager负责客户端用户认证管理，Presence Manager负责管理客户端用户的登录状态，NotificationManager负责实现服务器向客户端推送消息功能。</p>
+<p>这个解决方案的最大优势就是简单，我们不需要象C2DM那样依赖操作系统版本，也不会担心某一天Google服务器不可用。利用XMPP协议我们还可以进一步的对协议进行扩展，实现更为完善的功能。 采用这个方案，我们目前只能发送文字消息，不过对于推送来说一般足够了，因为我们不能指望通过推送得到所有的数据，一般情况下，利用推送只是告诉手机端服务器发生了某些改变，当客户端收到通知以后，应该主动到服务器获取最新的数据，这样才是推送服务的完整实现。 XMPP协议书相对来说还是比较简单的，值得我们进一步研究。</p>
+<p>但是在经过一段时间的测试，我发现关于androidpn也存在一些不足之处：</p>
+<ol>
+<li><p>比如时间过长时，就再也收不到推送的信息了。</p>
+</li>
+<li><p>性能上也不够稳定。</p>
+</li>
+<li><p>如果将消息从服务器上推送出去，就不再管理了，不管消息是否成功到达客户端手机上。</p>
+</li>
+</ol>
+<p>等等，总之，androidpn也有很多的缺点。如果我们要使用androidpn，则还需要做大量的工作。</p>
+<p>转载地址：<a href="http://www.cnblogs.com/hanyonglu/archive/2012/03/04/2378971.html" target="_blank" rel="external">http://www.cnblogs.com/hanyonglu/archive/2012/03/04/2378971.html</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/08/27/在Android中检测供电与联网方式/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在Android中检测手机供电与联网方式</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Android实现推送方式解决方案" data-title="Android实现推送方式解决方案" data-url="http://yoursite.com/2015/08/28/Android实现推送方式解决方案/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wwb443872831"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 Webb Wang
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
