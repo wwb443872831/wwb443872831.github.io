@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android安全机制 | WebbWang的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1 Android 安全机制概述Android是一个权限分离的系统。这是利用Linux已有的权限管理机制，通过为每一个Application分配不同的uid和gid，从而使得不同的Application之间的私有数据和访问（native以及java层通过这种sandbox机制，都可以）达到隔离的目的 。 与此同时， Android 还在此基础上进行扩展，提供了 permission 机制，它主要是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android安全机制">
+<meta property="og:url" content="http://yoursite.com/2015/08/30/Android安全机制/index.html">
+<meta property="og:site_name" content="WebbWang的博客">
+<meta property="og:description" content="1 Android 安全机制概述Android是一个权限分离的系统。这是利用Linux已有的权限管理机制，通过为每一个Application分配不同的uid和gid，从而使得不同的Application之间的私有数据和访问（native以及java层通过这种sandbox机制，都可以）达到隔离的目的 。 与此同时， Android 还在此基础上进行扩展，提供了 permission 机制，它主要是">
+<meta property="og:updated_time" content="2015-08-30T08:36:07.319Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android安全机制">
+<meta name="twitter:description" content="1 Android 安全机制概述Android是一个权限分离的系统。这是利用Linux已有的权限管理机制，通过为每一个Application分配不同的uid和gid，从而使得不同的Application之间的私有数据和访问（native以及java层通过这种sandbox机制，都可以）达到隔离的目的 。 与此同时， Android 还在此基础上进行扩展，提供了 permission 机制，它主要是">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/assets/head_icon.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Webb Wang</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+
+
+
+
+
+<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+
+
+
+
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/wwb443872831" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/2381231837" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/wwb999" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="https://plus.google.com/112389409065829491938/about" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="https://twitter.com/WWB999" title="twitter">twitter</a>
+					        
+								<a class="linkedin" target="_blank" href="https://cn.linkedin.com/in/webbwang" title="linkedin">linkedin</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JobScheduler/" style="font-size: 10px;">JobScheduler</a> <a href="/tags/ListView/" style="font-size: 10px;">ListView</a> <a href="/tags/Shadowsocks/" style="font-size: 10px;">Shadowsocks</a> <a href="/tags/webservic/" style="font-size: 10px;">webservic</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/切换动画/" style="font-size: 10px;">切换动画</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a> <a href="/tags/日记/" style="font-size: 10px;">日记</a> <a href="/tags/有趣/" style="font-size: 10px;">有趣</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/转载/" style="font-size: 15px;">转载</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">错的不是我们而是这个世界</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Webb Wang</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/assets/head_icon.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Webb Wang</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+
+
+
+
+
+<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+
+
+
+
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wwb443872831" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/2381231837" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/wwb999" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="https://plus.google.com/112389409065829491938/about" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="https://twitter.com/WWB999" title="twitter">twitter</a>
+			        
+						<a class="linkedin" target="_blank" href="https://cn.linkedin.com/in/webbwang" title="linkedin">linkedin</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Android安全机制" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/30/Android安全机制/" class="article-date">
+  	<time datetime="2015-08-30T08:07:03.000Z" itemprop="datePublished">2015-08-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android安全机制
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1_Android_安全机制概述">1 Android 安全机制概述</h1><p>Android是一个权限分离的系统。这是利用Linux已有的权限管理机制，通过为每一个Application分配不同的uid和gid，从而使得不同的Application之间的私有数据和访问（native以及java层通过这种sandbox机制，都可以）达到隔离的目的 。 与此同时， Android 还在此基础上进行扩展，提供了 permission 机制，它主要是用来对 Application 可以执行的某些具体操作进行权限细分和访问控制，同时提供了 per-URI permission 机制，用来提供对某些特定的数据块进行 ad-hoc 方式的访问。<br><a id="more"></a></p>
+<h2 id="1-1_uid、gid_、gids">1.1 uid、gid 、gids</h2><p>Android 的权限分离的基础是建立在 Linux 已有的 uid 、 gid 、 gids 基础上的 。<br>UID 。 Android 在 安装一个应用程序，就会为 它 分配一个 uid （参考 PackageManagerService 中的 newUserLP 实现）。其中普通 A ndroid 应用程序的 uid 是从 10000 开始分配 （参见 Process.FIRST_APPLICATION_UID ）， 10000 以下是系统进程的 uid 。<br>GID 。对 于普通应用程序来说， gid 等于 uid 。由于每个应用程序的 uid 和 gid 都不相同， 因此不管是 native 层还是 java 层都能够达到保护私有数据的作用 。<br>GIDS 。 gids 是由框架在 Application 安装过程中生成，与 Application 申请的具体权限相关。 如果 Application 申请的相应的 permission 被 granted ，而且中有对应的 gids ， 那么这个 Application 的 gids 中将包含这个 gids 。<br>uid gid gids的详细设置过程：</p>
+<p>请参考 ActivityManagerService 中的 startProcessLocked 。在通过 zygote 来启动一个 process 时，直接将 uid 传给 给了 gid 。再通过 zygote 来 fork 出新的进程（ zygote.java 中的 forkAndSpecialize ），最终在 native 层（ dalvik_system_zygote.c ）中的 forkAndSpecializeCommon 中通过 linux 系统调用来进行 gid 和 uid 和 gids 的设置。</p>
+<h2 id="1-2_permission">1.2 permission</h2><p>一个权限主要包含三个方面的信息：权限的名称；属于的权限组；保护级别。一个权限组是指把权限按照功能分成的不同的集合。每一个权限组包含若干具体权限，例如在 COST_MONEY 组中包含 <code>android.permission.SEND_SMS</code> ， <code>android.permission.CALL_PHONE</code> 等和费用相关的权限。</p>
+<p>每个权限通过 protectionLevel 来标识保护级别： normal ， dangerous ， signature ， signatureorsystem 。不同的保护级别代表了程序要使用此权限时的认证方式。 normal 的权限只要申请了就可以使用； dangerous 的权限在安装时需要用户确认才可以使用； signature 和 signatureorsystem 的权限需要使用者的 app 和系统使用同一个数字证书。</p>
+<p>Package 的权限信息主要 通过在 AndroidManifest.xml 中通过一些标签来指定。如 <code>&lt;permission&gt;</code> 标签， <code>&lt;permission-group&gt;</code> 标签 <code>&lt;permission-tree&gt;</code> 等标签。如果 package 需要申请使用某个权限，那么需要使用 <code>&lt;use-permission&gt;</code> 标签来指定。</p>
+<h1 id="2_Android_permission_管理机制">2 Android permission 管理机制</h1><h2 id="2-1_Framework_permission_机制">2.1 Framework permission 机制</h2><h3 id="2-1-1_安装入口">2.1.1 安装入口</h3><p>permission 的初始化，是指 permission 的向系统申请，系统进行检测并授权，并建立相应的数据结构。绝大多数的情况下 permission 都是从一个 package 中扫描所得，而这发生在 package 安装和升级的时候。一般有如下几种安装入口：</p>
+<ol>
+<li><p>package Installer,package被下载安装时会触发使用。packageInstaller会通过 AppSecurityPermissions来检查dangerous的权限，并对用户给出提示。</p>
+</li>
+<li><p>pm命令。</p>
+</li>
+<li><p>adb install 。最终还是 调用 pm install 来安装 apk 包。</p>
+</li>
+<li><p>拷贝即安装。PackageManagerService 中使用 AppDirObserver 对 /data/app/ 进行监视 ，如果有拷贝即触发安装。</p>
+</li>
+</ol>
+<p>这些安装方式 最终都会通过调用 PackageManagerService 中的函数来完成程序的安装。</p>
+<h2 id="2-1-2_permission_创建">2.1.2 permission 创建</h2><p>第一步，从 AndroidManifest.xml 中提取 permission 信息。主要提取如下信息：</p>
+<ul>
+<li><strong>shared uid</strong> 指定与其它 package 共享同一个 uid 。</li>
+<li><strong>permission</strong> 提取 permissions 标签指定属性。它使用 permissionInfo 来描述一个权限的基本信息。需要指定 protectedLevel 信息，并指定所属 group 信息。它将被添加到这个 package 的 permissions 这个 list 结构中。</li>
+<li><strong>permission-tree</strong> 提取 permissions-tree 标签属性。 permissions-tree 也通过 permissionInfo 来描述，并被添加到 package 的 permissions 这个 list 结构中。 permission-tree 只是一个名字空间，用来向其中动态添加一些所谓 Dynamic 的 permission ，这些 permission 可以动态修改。这些 permission 名称要以 permission-tree 的名称开头。它本身不是一种权限，没有 protectedLevel 和所属 group 。只是保存了所属的 packge 和权限名（带有 package 前缀的）。</li>
+<li><strong>permission-group</strong> 定义 permission 组信息，用 PermissionGroup 表示。本身不代表一个权限，会添加进入 package 的 permissionGroups 这个 list 中。</li>
+<li><strong>uses-permission</strong> 定义了 package 需要申请的权限名。将权限名添加到 package 的 requestedPermissions 这个 list 中。</li>
+<li><strong>adopt-permissions</strong> 将该标签指定的 name 存入 package 的 mAdoptPermissions 这个 list 中。 Name 指定了这个 package 需要从 name 指定的 package 进行权限领养。在 system package 进行升级时使用。</li>
+</ul>
+<p>第二步。获取 Package 中的证书，验证，并将签名信息保存在 Package 结构中。</p>
+<ol>
+<li><p>如果该 package 来自 system img （系统 app ），那么只需要从该 Package 的 AndroidManifest.xml 中获取签名信息，而无需验证其完整性。但是如果这个 package 与其它 package 共享一个 uid ，那么这个共享 uid 对应的 sharedUser 中保存的签名与之不一致，那么签名验证失败。</p>
+</li>
+<li><p>如果是普通的 package ，那么需要提取证书和签名信息，并对文件的完成性进行验证。</p>
+</li>
+</ol>
+<p>第三步。如果是普通的 package ，那么清除 package 的 mAdoptPermissions 字段信息（系统 package 升级才使用）。</p>
+<p>第四步。如果在 AndroidManifest.xml 中指定了 shared user ，那么先查看全局 list 中（ mSharedUsers ）是否该 uid 对应的 SharedUserSetting 数据结构，若没有则新分配一个 uid ，创建 SharedUserSetting 并保存到全局全局 list （ mSharedUsers ）中。</p>
+<p>mUserIds 保存了系统中已经分配的 uid 对应的 SharedUserSetting 结构。每次分配时总是从第一个开始轮询，找到第一个空闲的位置 i ，然后加上 FIRST_APPLICATION_UID 即可。</p>
+<p>第五步。创建 PackageSettings 数据结构。并将 PackageSettings 与 SharedUserSetting 进行绑定。其中 PackageSettings 保存了 SharedUserSetting 结构；而 SharedUserSetting 中会使用 PackageSettings 中的签名信息填充自己内部的签名信息，并将 PackageSettings 添加到一个队列中，表示 PackageSettings 为其中的共享者之一。</p>
+<p>在创建时，首先会以 packageName 去全局数据结构 mPackages 中查询是否已经有对应的 PackageSettings 数据结构存在。如果已经存在 PackageSettings 数据结构（比如这个 package 已经被 uninstall ，但是还没有删除数据，此时 package 结构已经被释放）。那么比较该 package 中的签名信息（从 AndroidManifest 中扫描得到）与 PackageSettings 中的签名信息是否匹配。如果不匹配但是为 system package ，那么信任此 package ，并将 package 中的签名信息更新到已有的 PackageSettings 中去，同时如果这个 package 与其它 package 共享了 uid ，而且 shared uid 中保存的签名信息与当前 package 不符，那么签名也验证失败。</p>
+<p>第六步。如果 mAdoptPermissions 字段不为空，那么处理 permission 的领养（从指定的 package 对应的 PackageSettings 中，将权限的拥有者修改为当前 package ，一般在 system app 升级的时候才发生，在此之前需要验证当被领养的 package 已经被卸载，即检查 package 数据结构是否存在）。</p>
+<p>第七步。添加自定义权限。将 package 中定义的 permissionGroup 添加到全局的列表 mPermissionGroups 中去；将 package 中定义的 permissions 添加到全局的列表中去（如果是 permission-tree 类型，那么添加到 mSettings.mPermissionTrees ，如果是一般的 permission 添加到 mSettings.mPermissions 中）。</p>
+<p>第八步。清除不一致的 permission 信息。</p>
+<ol>
+<li><p>清除不一致的 permission-tree 信息。如果该 permission-tree 的 packageSettings 字段为空，说明还未对该 package 进行过解析（若代码执行到此处时 packageSettings 肯定已经被创建过），将其 remove 掉。如果 packageSettings 不为空，但是对应的 package 数据结构为空（说明该 package 已经被卸载，但数据还有保留），或者 package 数据结构中根本不含有这个 permission-tree ，那么将这个 permission-tree 清除。</p>
+</li>
+<li><p>清除不一致的 permission 信息。如果 packageSettings 或者 package 结构为空（未解析该 package 或者被卸载，但数据有保留），或者 package 中根本没有定义该 permission ，那么将该 permission 清除。</p>
+</li>
+</ol>
+<p>第九步。对每一个 package 进行轮询，并进行 permission 授权。</p>
+<ol>
+<li><p>对申请的权限进行检查，并更新 grantedPermissions 列表</p>
+</li>
+<li><p>如果其没有设置 shared user id ，那么将其 gids 初始化为 mGlobalGids ，它从 permission.xml 中读取。</p>
+</li>
+<li><p>遍历所有申请的权限，进行如下检查</p>
+<p> 1 ） 如果是该权限是 normal 或者 dangerous 的。通过检查。</p>
+<p> 2 ） 如果权限需要签名验证。如果签名验证通过。还需要进行如下检查</p>
+</li>
+</ol>
+<p><em>如果程序升级，而且是 system package 。那么是否授予该权限要看原来的 package 是否被授予了该权限。如果被授予了，那么通过检查，否则不通过。<br>如果是新安装的。那么检查通过。</em></p>
+<ol>
+<li><p>如果 3 中检查通过，那么将这个 permission 添加到 package 的 grantedPermissions 列表中，表示这个 permission 申请成功（ granted ）。申请成功的同时会将这个申请到的 permission 的 gids 添加到这个 package 的 gids 中去。</p>
+</li>
+<li><p>将 permissionsFixed 字段标准为 ture ，表示这个 packge 的 permission 进行过修正。后续将禁止对非 system 的 app 的权限进行再次修正。</p>
+</li>
+</ol>
+<h2 id="2-1-3_Dynamic_permission_的管理">2.1.3 Dynamic permission 的管理</h2><p>PackageManagerService 提供了 addPermission/ removePermission 接口用来动态添加和删除一些权限。但是这些权限必须是所谓的动态权限（ <code>BasePermission.TYPE_DYNAMIC</code> ）。</p>
+<p>一个 Package 如果要添加 Dynamic permissions ，首先必须要在 manifest 中申明 <code>&lt;permission-tree&gt;</code> 标签，它实际上是一个权限的名字空间（例如，“ com.foo.far ”这个权限就是 permission-tree “com.foo ”的成员），本身不是一个权限。一个 Package 只能为自己的 permission-tree 或者拥有相同的 uid 的 package 添加或者删除权限。</p>
+<p>Package 不能够通过这种接口去修改在 manifest 中静态申请的权限，否则抛出异常。</p>
+<p>首先查找这个 permission 在全局 permission 列表 <code>mSettings.mPermissions</code> 中是否存在。如果存在，而且类型为 <code>BasePermission.TYPE_DYNAMIC</code> 那么根据传入的权限信息修改全局表中的权限信息，并触发 permissions.xml 的持久化。</p>
+<p>如果在全局的 permission 列表 mSettings.mPermissions 中没有找到，先找到这个 permission 所在 permissionTree ，然后添加到全局 permission 列表 <code>mSettings.mPermissions</code> 中去，并触发 permissions.xml 的持久化。</p>
+<h2 id="2-1-4_Uri_permission_的管理">2.1.4 Uri permission 的管理</h2><p>下面两个 接口 主要用于 Uri permission 的管理 （其实现在 ActivityManagerService 中）。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为指定的 uid 和 targetPkg 添加对某个 content Uri 的读或者写权限。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">grantUriPermission</span><span class="params">(IApplicationThread caller, String targetPkg, Uri uri, <span class="keyword">int</span> mode)</span> <span class="keyword">throws</span> RemoteException</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 清除所有通过 grantUriPermission 对某个 Uri 授予的权限。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">revokeUriPermission</span><span class="params">(IApplicationThread caller, Uri uri, <span class="keyword">int</span> mode)</span> <span class="keyword">throws</span> RemoteException</span>;</span><br></pre></td></tr></table></figure></p>
+<p>grantUriPermission 主要的实现过程分析。</p>
+<p>grantUriPermission 分析：</p>
+<ol>
+<li><p>验证 caller 的 ProcessRecord 和 targetPkg 不为空。否则检测不通过。</p>
+</li>
+<li><p>验证所请求的 mode 为 <code>Intent.FLAG_GRANT_READ_URI_PERMISSION</code> 或者为 <code>Intent.FLAG_GRANT_WRITE_URI_PERMISSION</code> ，否则不通过。</p>
+</li>
+<li><p>确保参数 Uri 是一个 content Uri 。否则，则检测不通过。</p>
+</li>
+<li><p>通过 Uri 得到目标 ContentProvider ，如果不存在，则检测不通过。</p>
+</li>
+<li><p>从 PackageManagerService 中获得 targetPkg 对应的 uid 。</p>
+</li>
+<li><p>检查 target uid 所对应的 package 是否真正需要这个权限？</p>
+</li>
+</ol>
+<p>先判断要申请的是读还是写权限，然后查看对应的 ContentProvider 中对应的 readPermission writePermission 字段是否保存了权限名称。 如果该字段不为空，则以 target uid 和该权限名去PackageManagerService 中去查找该 uid 是否被 granted 了该权限。如果已经获得了该权限，那么无需再去为这个 Activity 去申请这个 Uri 权限了，返回。否者继续执行如下操作。</p>
+<ol>
+<li><p>检查这个 ContentProvider 的 grantUriPermissions 开关变量，是否允许对其它 package 进行权限的 grant 操作。如果禁止，那么抛出异常。</p>
+</li>
+<li><p>检查这个 ContentProvider 是否设置了 Uri 的过滤类型 uriPermissionPatterns ，如果设置了过滤类型，则将需要申请权限的 Uri 与之匹配。匹配不同过，则抛出异常。</p>
+</li>
+<li><p>检查调用者自己是否有权限访问这个 Uri 。如果没有，抛出异常。</p>
+</li>
+<li><p>从 mGrantedUriPermissions 中取得 target uid 对应的 HashMap<uri, uripermission=""> 数据结构。用 target uid 和 Uri 生成 UriPermission 并保存在 mGrantedUriPermissions 中。</uri,></p>
+</li>
+</ol>
+<p>revokeUriPermission 实现分析。<br><strong>找到该 Uri 对应的 ContentProvider ，然后删除 mGrantedUriPermissions 中与 Uri 对应的所有权限。</strong></p>
+<h2 id="2-2_permission_的动态检查">2.2 permission 的动态检查</h2><p>这里的动态检查是指是 package 在程序运行过程中进行某些操作或者数据访问时才进行的 check ，与之对应的是应用程序安装或者升级时 PackageManagerService 通过扫描包中的静态权限信息相对应。</p>
+<p>系统与权限 检查 相关的机制的实现主要集中在 PackageManagerService 和 ActivityManagerService 中。 ActivityManagerService 主要负责的是底层的 uid 层次的身份检查； PackageManagerService 则维护了 uid 到自己拥有的和被授予的权限的一张表。在通过 ActivityManagerService 的身份检查后， PackageManagerService 根据请求者的 uid 来查看这张表，判断其是否具有相应的权限。</p>
+<p>除此之外， per-URI permission 机制的实现也需要一张表，它维护在 ActivityManagerService 中，它建立了从 content URI 到被授权访问这个 URI 的 component 之间的映射。但是它也需要借助 PackageManagerService 的机制来辅助实现。</p>
+<h3 id="2-2-1_framework_提供的接口">2.2.1 framework 提供的接口</h3><p>Android framework 中提供了一些接口用来对外来的访问（包括自己）进行权限检查 。 这些接口 主要通过 ContextWrapper 提供，具体实现在 ContextImpl 中 。如果 package 接受到外来访问者的操作请求，那么可以调用这些接口进行权限检查。一般情况下可以把这些接口的检查接口分为两种，一种是返回错误，另一种是抛出异常。</p>
+<p>主要包含如下几组：</p>
+<ol>
+<li>permission 和 uid 检查 API</li>
+</ol>
+<p>下面这一组接口主要用来检查某个调用（或者是其它 package 或者是自己）是否拥有访问某个 permission 的权限。参数中 pid 和 uid 可以指定，如果没有指定，那么 framework 会通过 Binder 来获取调用者的 uid 和 pid 信息，加以填充。返回值为 <code>PackageManager.PERMISSION_GRANTED</code> 或者 <code>PackageManager.PERMISSION_DENIED</code> 。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">checkPermission</span><span class="params">(String permission, <span class="keyword">int</span> pid, <span class="keyword">int</span> uid)</span> <span class="comment">// 检查某个 uid 和 pid 是否有 permission 权限</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">checkCallingPermission</span><span class="params">(String permission)</span> <span class="comment">// 检查调用者是否有 permission 权限，如果调用者是自己那么返回 PackageManager.PERMISSION_DENIED</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">checkCallingOrSelfPermission</span><span class="params">(String permission)</span> <span class="comment">// 检查自己或者其它调用者是否有 permission 权限</span></span></span><br></pre></td></tr></table></figure></p>
+<p>下面这一组和上面类似，如果遇到检查不通过时，会抛出异常，打印消息 。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enforcePermission</span><span class="params">(String permission, <span class="keyword">int</span> pid, <span class="keyword">int</span> uid, String message)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enforceCallingPermission</span><span class="params">(String permission, String message)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enforceCallingOrSelfPermission</span><span class="params">(String permission, String message)</span></span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>per-URI 检查 API</li>
+</ol>
+<p>为某个 package 添加访问 content Uri 的读或者写权限。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">grantUriPermission</span><span class="params">(String toPackage, Uri uri, <span class="keyword">int</span> modeFlags)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">revokeUriPermission</span><span class="params">(Uri uri, <span class="keyword">int</span> modeFlags)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>检查某个 pid 和 uid 的 package 是否拥有 uri 的读写权限，返回值表示是否被 granted 。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">checkUriPermission</span><span class="params">(Uri uri, <span class="keyword">int</span> pid, <span class="keyword">int</span> uid, <span class="keyword">int</span> modeFlags)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">checkCallingUriPermission</span><span class="params">(Uri uri, <span class="keyword">int</span> modeFlags)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">checkCallingOrSelfUriPermission</span><span class="params">(Uri uri, <span class="keyword">int</span> modeFlags)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">checkUriPermission</span><span class="params">(Uri uri, String readPermission,String writePermission, <span class="keyword">int</span> pid, <span class="keyword">int</span> uid, <span class="keyword">int</span> modeFlags)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>检查某个 pid 和 uid 的 package 是否拥有 uri 的读写权限，如果失败则抛出异常，打印消息 。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enforceUriPermission</span><span class="params">(Uri uri, <span class="keyword">int</span> pid, <span class="keyword">int</span> uid, <span class="keyword">int</span> modeFlags, String message)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enforceCallingUriPermission</span><span class="params">(Uri uri, <span class="keyword">int</span> modeFlags, String message)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enforceCallingOrSelfUriPermission</span><span class="params">(Uri uri, <span class="keyword">int</span> modeFlags, String message)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enforceUriPermission</span><span class="params">(Uri uri, String readPermission, String writePermission,<span class="keyword">int</span> pid, <span class="keyword">int</span> uid, <span class="keyword">int</span> modeFlags, String message)</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="2-2-2_实现分析">2.2.2 实现分析</h3><p>ContextImpl.java 中提供的 API ，其实都是由 ActivityManagerService 中的如下几个接口进行的封装。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">checkPermission</span><span class="params">(String permission, <span class="keyword">int</span> pid, <span class="keyword">int</span> uid)</span> <span class="keyword">throws</span> RemoteException</span>; <span class="comment">// 主要用于一般的 permission 检查</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">checkUriPermission</span><span class="params">(Uri uri, <span class="keyword">int</span> pid, <span class="keyword">int</span> uid, <span class="keyword">int</span> mode)</span> <span class="keyword">throws</span> RemoteException</span>; <span class="comment">// 主要用于 Content Uri 的 permission 检查</span></span><br></pre></td></tr></table></figure></p>
+<p>checkPermission 的实现分析</p>
+<ol>
+<li><p>如果传入的 permission 名称为 null ，那么返回 <code>PackageManager.PERMISSION_DENIED</code> 。</p>
+</li>
+<li><p>判断调用者 uid 是否符合要求 。</p>
+<p> 1 ） 如果 uid 为 0 ，说明是 root 权限的进程，对权限不作控制。</p>
+<p> 2 ） 如果 uid 为 system server 进程的 uid ，说明是 system server ，对权限不作控制。</p>
+<p> 3 ） 如果是 ActivityManager 进程本身，对权限不作控制。</p>
+<p> 4 ） 如果调用者 uid 与参数传入的 req uid 不一致，那么返回 <code>PackageManager.PERMISSION_DENIED</code> 。</p>
+</li>
+<li><p>如果通过 2 的检查后，再调用 PackageManagerService.checkUidPermission ，判断 这个 uid 是否拥有相应的权限，分析如下 。</p>
+<p> 1 ） 首先它通过调用 getUserIdLP ，去 <code>PackageManagerService.Setting.mUserIds</code> 数组中，根据 uid 查找 uid （也就是 package ）的权限列表。一旦找到，就表示有相应的权限。</p>
+<p> 2 ） 如果没有找到，那么再去 <code>PackageManagerService.mSystemPermissions</code> 中找。这些信息是启动时，从 /system/etc/permissions/platform.xml 中读取的。这里记录了一些系统级的应用的 uid 对应的 permission 。</p>
+<p> 3 ）返回结果 。</p>
+</li>
+</ol>
+<p>同样 checkUriPermission 的实现 主要在 ActivityManagerService 中，分析如下：</p>
+<ol>
+<li><p>如果 uid 为 0 ，说明是 root 用户，那么不控制权限。</p>
+</li>
+<li><p>否则，在 ActivityManagerService 维护的 mGrantedUriPermissions 这个表中查找这个 uid 是否含有这个权限，如果有再检查其请求的是读还是写权限。</p>
+</li>
+</ol>
+<h1 id="3_Android_签名机制">3 Android 签名机制</h1><p>关于签名机制，其实分两个阶段。</p>
+<p>包扫描阶段需要进行完整性和证书的验证。普通 package 的签名和证书是必须要先经过验证的。具体做法是对 manifest 下面的几个文件进行完整性检查。完整性检查包括这个 jar 包中的所有文件。如果是系统 package 的话，只需要使用 AndroidMenifest.xml 这个文件去提取签名和验证信息就可以了。</p>
+<p>在权限创建阶段。如果该 package 来自 system img （系统 app ），那么 trust it ，而且使用新的签名信息去替换就的信息。前提是如果这个 package 与其它 package 共享一个 uid ，那么这个共享 uid 对应的 sharedUser 中保存的签名与之不一致，那么签名验证失败。有些时候系卸载一个 app ，但是不删除数据，那么其 PackageSettings 信息会保留，其中会保存签名信息。这样再安装是就会出现不一致。</p>
+<h2 id="3-1_Android_Package_签名原理">3.1 Android Package 签名原理</h2><p>android 中系统和 app 都是需要签名的。可以自己通过 development/tools/make_key 来生成公钥和私钥。</p>
+<p>android 源代码中提供了工具 ./out/host/linux-x86/framework/signapk.jar 来进行手动签名。签名的主要作用在于限制对于程序的修改仅限于同一来源。系统中主要有两个地方会检查。如果是程序升级的安装，则要检查新旧程序的签名证书是否一致，如果不一致则会安装失败；对于申请权限的 protectedlevel 为 signature 或者 signatureorsystem 的，会检查权限申请者和权限声明者的证书是否是一致的。签名相关文件可以从 apk 包中的 META-INF 目录下找到。</p>
+<p>signapk.jar 的源代码在 build/tools/signapk ，签名主要有以下几步：</p>
+<p>将除去 CERT.RSA ， CERT.SF ， MANIFEST.MF 的所有文件生成 SHA1 签名</p>
+<p>首先将除了 CERT.RSA ， CERT.SF ， MANIFEST.MF 之外的所有非目录文件分别用 SHA-1 计算摘要信息，然后使用 base64 进行编码，存入 MANIFEST.MF 中。 如果 MANIFEST.MF 不存在，则需要创建。存放格式是 entry name 以及对应的摘要</p>
+<p>根据 之前计算的 SHA1 摘要信息，以及 私钥生成 一系列的 signature 并写入 CERT.SF</p>
+<p>对 整个 MANIFEST.MF 进行 SHA1 计算，并将摘要信息存入 CERT.SF 中 。然后对之前计算的所有摘要信息使用 SHA1 再次计算数字签名，并写入 CERT.SF 中。</p>
+<p>把公钥和签名信息写入 CERT.RST</p>
+<p>把之前整个的签名输出文件 使用私有密钥计算签名。同时将签名结果，以及之前声称的公钥信息写入 CERT.RSA 中保存。</p>
+<h2 id="3-2_Package_的签名验证">3.2 Package 的签名验证</h2><p>安装时对一个 package 的签名验证的主要逻辑在 JarVerifier.java 文件的 verifyCertificate 函数中实现。 其主要的思路是通过提取 cert.rsa 中的证书和签名信息，获取签名算法等信息，然后按照之前对 apk 签名的方法进行计算，比较得到的签名和摘要信息与 apk 中保存的匹配。</p>
+<p>第一步。提取证书信息，并对 cert.sf 进行完整性验证。</p>
+<ol>
+<li><p>先找到是否有 DSA 和 RSA 文件 ，如果找到则对其进行 decode ，然后读取其中的所有的证书列表（这些证书会被保存在 Package 信息中，供后续使用）。</p>
+</li>
+<li><p>读取这个文件中的签名数据信息块列表，只取第一个签名数据块。读取其中的发布者和证书序列号。</p>
+</li>
+<li><p>根据证书序列号，去匹配之前得到的所有证书，找到与之匹配的证书。</p>
+</li>
+<li><p>从之前得到的签名数据块中读取签名算法和编码方式等信息</p>
+</li>
+<li><p>读取 cert.sf 文件，并计算整个的签名，与数据块中的签名（编码格式的）进行比较，如果相同则完整性校验成功。</p>
+</li>
+</ol>
+<p>第二步。使用 cert.sf 中的摘要信息，验证 MANIFEST.MF 的完整性。</p>
+<p><em>在 cert.sf 中提取 SHA1-Digest-Manifest 或者 SHA1-Digest 开头的签名 数据块 （ -Digest-Manifest 这个是整个 MANIFEST.MF 的摘要 信息，其它的是 jar 包中其它文件的摘要信息 ）， 并逐个对这些数据块 进行验证。验证的方法是，现将 cert.sf 看做是很多的 entries ，每个 entries 包含了一些基本信息，如这个 entry 中使用的摘要算法（ SHA1 等），对 jar 包中的哪个文件计算了摘要，摘要结果是什么。 处理时先找到每个摘要数据开中的文件信息，然后从 jar 包中读取，然后使用 -Digest 之前的摘要算法进行计算，如果计算结果与摘要数据块中保存的信息的相匹配，那么就完成验证。</em></p>
+<h4 id="转载自互联网，作者不详"><em>转载自互联网，作者不详</em></h4>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/08/28/Android实现推送方式解决方案/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android实现推送方式解决方案</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Android安全机制" data-title="Android安全机制" data-url="http://yoursite.com/2015/08/30/Android安全机制/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wwb443872831"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 Webb Wang
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
