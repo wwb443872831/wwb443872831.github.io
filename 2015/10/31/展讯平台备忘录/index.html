@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="WebbWang的博客">
 <meta property="og:description" content="本文内容为7731平台软件修改的一些技巧整理，不定期更新……
 替换默认壁纸的方法：xx项目目录\device\sprd\xxx版本\overlay\frameworks\base\core\res\res\default_wallpaper....因为展讯平台overlay机制已经写好，overlay机制是google提供的一种客置化framework以及package下资源的方式，应用程序编译时">
-<meta property="og:updated_time" content="2015-10-31T15:11:18.238Z">
+<meta property="og:updated_time" content="2015-10-31T15:12:42.695Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="展讯平台备忘录">
 <meta name="twitter:description" content="本文内容为7731平台软件修改的一些技巧整理，不定期更新……
@@ -531,7 +531,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>本文内容为7731平台软件修改的一些技巧整理，不定期更新……</p>
-<h3 id="替换默认壁纸的方法：">替换默认壁纸的方法：</h3><p>xx项目目录<code>\device\sprd\xxx版本\overlay\frameworks\base\core\res\res\default_wallpaper....</code><br>因为展讯平台overlay机制已经写好，overlay机制是google提供的一种客置化framework以及package下资源的方式，应用程序编译时会根据一个宏LOCAL_RESOURCE_DIR来导入需要编译的资源文件，诸如各种图标，图片，字符串等等。默认时都是指向当前应用目录下的res目录，可以使用DEVICE级宏DEVICE_PACKAGE_OVERLAYS，或PRODUCT级宏PRODUCT_PACKAGE_OVERLAYS，用于指定重载的res目录，在系统编译APP时，会用OVERLAY指定的res目录重载掉APP内的res（注意，只会重载掉overlay里定义的，不是所有的）。<br>因此，需要注意两个问题：<br>&lt;–more–&gt;</p>
+<h3 id="替换默认壁纸的方法：">替换默认壁纸的方法：</h3><p>xx项目目录<code>\device\sprd\xxx版本\overlay\frameworks\base\core\res\res\default_wallpaper....</code><br>因为展讯平台overlay机制已经写好，overlay机制是google提供的一种客置化framework以及package下资源的方式，应用程序编译时会根据一个宏LOCAL_RESOURCE_DIR来导入需要编译的资源文件，诸如各种图标，图片，字符串等等。默认时都是指向当前应用目录下的res目录，可以使用DEVICE级宏DEVICE_PACKAGE_OVERLAYS，或PRODUCT级宏PRODUCT_PACKAGE_OVERLAYS，用于指定重载的res目录，在系统编译APP时，会用OVERLAY指定的res目录重载掉APP内的res（注意，只会重载掉overlay里定义的，不是所有的）。<br>因此，需要注意两个问题：<br><a id="more"></a></p>
 <ul>
 <li>1.overlay仅对framework及package目录下的文件进行重载，因此对于其他目标目录是不起作用的</li>
 <li>2.overlay仅能客置化资源文件，不能客置化其他文件，如java文件。</li>
