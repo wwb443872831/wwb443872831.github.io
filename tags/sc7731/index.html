@@ -3,18 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Android 5.0的调度作业JobScheduler | WebbWang的博客</title>
+  <title>Tag: sc7731 | WebbWang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Android 5.0 提供了一个新的 JobScheduler API，它允许您通过为系统定义要在以后的某个时间或在指定的条件下（例如，当设备在充电时）异步运行的作业来优化电池寿命。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android 5.0的调度作业JobScheduler">
-<meta property="og:url" content="http://yoursite.com/2015/08/15/Android-5-0的调度作业JobScheduler/index.html">
+  <meta name="description" content="wwb443872831">
+<meta property="og:type" content="website">
+<meta property="og:title" content="WebbWang的博客">
+<meta property="og:url" content="http://yoursite.com/tags/sc7731/index.html">
 <meta property="og:site_name" content="WebbWang的博客">
-<meta property="og:description" content="Android 5.0 提供了一个新的 JobScheduler API，它允许您通过为系统定义要在以后的某个时间或在指定的条件下（例如，当设备在充电时）异步运行的作业来优化电池寿命。">
-<meta property="og:updated_time" content="2015-08-14T16:29:49.085Z">
+<meta property="og:description" content="wwb443872831">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 5.0的调度作业JobScheduler">
-<meta name="twitter:description" content="Android 5.0 提供了一个新的 JobScheduler API，它允许您通过为系统定义要在以后的某个时间或在指定的条件下（例如，当设备在充电时）异步运行的作业来优化电池寿命。">
+<meta name="twitter:title" content="WebbWang的博客">
+<meta name="twitter:description" content="wwb443872831">
   
   
     <link rel="icon" href="/favicon.png">
@@ -490,143 +489,53 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-Android-5-0的调度作业JobScheduler" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap">
   
-    <div class="article-meta">
-      <a href="/2015/08/15/Android-5-0的调度作业JobScheduler/" class="article-date">
-  	<time datetime="2015-08-14T16:10:46.000Z" itemprop="datePublished">2015-08-15</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2015" class="archive-year">2015</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2015/10/31/展讯平台备忘录/" class="archive-article-date">
+  	<time datetime="2015-10-31T14:43:26.000Z" itemprop="datePublished">Oct 31</time>
 </a>
-    </div>
+        </div>
+    	 
   
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Android 5.0的调度作业JobScheduler
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2015/10/31/展讯平台备忘录/">展讯平台备忘录</a>
     </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JobScheduler/">JobScheduler</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sc7731/">sc7731</a></li></ul>
 	</div>
 
-        
+          
 
+        </div>
         <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Android 5.0 提供了一个新的 JobScheduler API，它允许您通过为系统定义要在以后的某个时间或在指定的条件下（例如，当设备在充电时）异步运行的作业来优化电池寿命。<br><a id="more"></a><br>首先看一下官方<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html" target="_blank" rel="external">JobScheduler的API</a>  </p>
-<blockquote>
-<p>This is an API for scheduling various types of jobs against the framework that will be executed in your application’s own process.</p>
-</blockquote>
-<p>这是一个API调度框架，将在您的应用程序的进程中执行的工作。</p>
-<blockquote>
-<p>See JobInfo for more description of the types of jobs that can be run and how to construct them. You will construct these JobInfo objects and pass them to the JobScheduler with schedule(JobInfo). When the criteria declared are met, the system will execute this job on your application’s JobService. You identify which JobService is meant to execute the logic for your job when you create the JobInfo with JobInfo.Builder(int, android.content.ComponentName).</p>
-</blockquote>
-<p>看到Jobinfo的更多的描述类型的工作，可以运行，以及如何构建。你可以构造这些JobInfo对象，并且使用schedule(JobInfo)在JobScheduler。</p>
-<p>当符合标准声明，系统将执行调度在你的应用程序Jobservice。</p>
-<blockquote>
-<p>The framework will be intelligent about when you receive your callbacks, and attempt to batch and defer them as much as possible. Typically if you don’t specify a deadline on your job, it can be run at any moment depending on the current state of the JobScheduler’s internal queue, however it might be deferred as long as until the next time the device is connected to a power source.<br>You do not instantiate this class directly; instead, retrieve it through Context.getSystemService(Context.JOB_SCHEDULER_SERVICE).</p>
-</blockquote>
-<p>作业调度在下列情况下非常有用：</p>
-<ul>
-<li>应用具有您可以推迟的非面向用户的工作。</li>
-<li>应用具有当插入设备时您希望优先执行的工作。</li>
-<li>应用具有需要访问网络或 Wi-Fi 连接的任务。</li>
-<li>应用具有您希望作为一个批次定期运行的许多任务。  </li>
-</ul>
-<p>使用 JobInfo.Builder 类配置调度的任务应当如何运行。您可以将任务调度为在特定的条件下运行，例如：</p>
-<ul>
-<li>当设备充电时启动</li>
-<li>当设备连接到不限流量网络时启动</li>
-<li>当设备空闲时启动</li>
-<li>在特定的截止期限之前或以最小的延迟完成  </li>
-</ul>
-<p>例如，您可以添加如下代码以在不限流量网络上运行您的任务：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JobInfo uploadTask = <span class="keyword">new</span> JobInfo.Builder(mJobId,</span><br><span class="line">                                         mServiceComponent <span class="comment">/* JobService component */</span>)</span><br><span class="line">        .setRequiredNetworkCapabilities(JobInfo.NetworkType.UNMETERED)</span><br><span class="line">        .build();</span><br><span class="line">JobScheduler jobScheduler =</span><br><span class="line">        (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);</span><br><span class="line">jobScheduler.schedule(uploadTask);</span><br></pre></td></tr></table></figure></p>
-<p>如果设备具有稳定的电源（也就是说，它已插入了 2 分钟以上并且电池处于健康水平），则系统将运行任何已就绪可运行的已调度作业，即使作业的截止期限尚未到期也是如此。</p>
-<p>这里可以在看一下官方给出的 <a href="https://developer.android.com/reference/android/app/job/JobService.html" target="_blank" rel="external">JobService API</a></p>
-<p>详细代码见Android SDK给出的Sample。</p>
-<p><a href="http://blog.csdn.net/cuiran/article/details/42805057" target="_blank" rel="external">原帖地址</a></p>
-
-      
-    </div>
-    
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2015/08/17/ListView滑动删除/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          ListView滑动删除
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/08/14/CXF-SSH搭建webservice/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Apache CXF+SSH搭建webservice</div>
-      <strong class="article-nav-caption">></strong>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
 
-
-<div class="share">
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style">
-		<span class="jiathis_txt">分享到：</span>
-		<a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_cqq"></a>
-		<a class="jiathis_button_douban"></a>
-		<a class="jiathis_button_weixin"></a>
-		<a class="jiathis_button_tumblr"></a>
-		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	</div>
-	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
-	<!-- JiaThis Button END -->
-</div>
-
-
-
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Android-5-0的调度作业JobScheduler" data-title="Android 5.0的调度作业JobScheduler" data-url="http://yoursite.com/2015/08/15/Android-5-0的调度作业JobScheduler/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"wwb443872831"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-
-
+    
 
 </div>
       <footer id="footer">
@@ -652,9 +561,9 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false
 	}
