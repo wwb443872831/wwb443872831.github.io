@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: 有趣 | WebbWang的博客</title>
+  <title>Ubuntu下配置tomcat开机启动 | WebbWang的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="wwb443872831">
-<meta property="og:type" content="website">
-<meta property="og:title" content="WebbWang的博客">
-<meta property="og:url" content="http://yoursite.com/tags/有趣/index.html">
+  <meta name="description" content="废话不多说，直接进入主题：安装好了jdk和tomcat以后，在/root/下执行sudo vim .bashrc,在最后面加入export JAVA_HOME=/......（这里是你JDK的安装目录）下面设置让tomcat开机自启动。执行命令sudo vim /etc/init.d/tomcat（新建一个启动配置文件），然后把以下英文部分复制过去。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu下配置tomcat开机启动">
+<meta property="og:url" content="http://yoursite.com/2015/11/08/Ubuntu下配置tomcat开机启动/index.html">
 <meta property="og:site_name" content="WebbWang的博客">
-<meta property="og:description" content="wwb443872831">
+<meta property="og:description" content="废话不多说，直接进入主题：安装好了jdk和tomcat以后，在/root/下执行sudo vim .bashrc,在最后面加入export JAVA_HOME=/......（这里是你JDK的安装目录）下面设置让tomcat开机自启动。执行命令sudo vim /etc/init.d/tomcat（新建一个启动配置文件），然后把以下英文部分复制过去。">
+<meta property="og:updated_time" content="2015-11-08T08:53:17.023Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WebbWang的博客">
-<meta name="twitter:description" content="wwb443872831">
+<meta name="twitter:title" content="Ubuntu下配置tomcat开机启动">
+<meta name="twitter:description" content="废话不多说，直接进入主题：安装好了jdk和tomcat以后，在/root/下执行sudo vim .bashrc,在最后面加入export JAVA_HOME=/......（这里是你JDK的安装目录）下面设置让tomcat开机自启动。执行命令sudo vim /etc/init.d/tomcat（新建一个启动配置文件），然后把以下英文部分复制过去。">
   
   
     <link rel="icon" href="/favicon.png">
@@ -489,53 +490,105 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-Ubuntu下配置tomcat开机启动" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/08/14/让博客High一下/" class="archive-article-date">
-  	<time datetime="2015-08-14T12:52:15.000Z" itemprop="datePublished">Aug 14</time>
+    <div class="article-meta">
+      <a href="/2015/11/08/Ubuntu下配置tomcat开机启动/" class="article-date">
+  	<time datetime="2015-11-08T08:45:13.000Z" itemprop="datePublished">2015-11-08</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/08/14/让博客High一下/">让博客High一下</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ubuntu下配置tomcat开机启动
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/有趣/">有趣</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/J2EE/">J2EE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tomcat/">Tomcat</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
 	</div>
 
-          
+        
 
-        </div>
         <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+      </div>
+      
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="废话不多说，直接进入主题：">废话不多说，直接进入主题：</h3><p>安装好了jdk和tomcat以后，在<code>/root/</code>下执行<code>sudo vim .bashrc</code>,在最后面加入<code>export JAVA_HOME=/......</code>（这里是你JDK的安装目录）<br>下面设置让tomcat开机自启动。<br>执行命令<code>sudo vim /etc/init.d/tomcat</code>（新建一个启动配置文件），然后把以下英文部分复制过去。<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh   </span></span><br><span class="line"><span class="comment"># Tomcat auto-start</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># description: Auto-starts tomcat</span></span><br><span class="line"><span class="comment"># processname: tomcat</span></span><br><span class="line"><span class="comment"># pidfile: /var/run/tomcat.pid</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=.....jdk.....</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">    start)</span><br><span class="line">            sh (tomcat-home)/bin/startup.sh</span><br><span class="line">            ;;</span><br><span class="line">    stop) </span><br><span class="line">            sh (tomcat-home)/bin/shutdown.sh</span><br><span class="line">            ;;</span><br><span class="line">    restart)</span><br><span class="line">            sh (tomcat-home)/bin/shutdown.sh</span><br><span class="line">            sh (tomcat-home)/bin/startup.sh</span><br><span class="line">            ;;</span><br><span class="line">    <span class="keyword">esac</span>  </span><br><span class="line">    <span class="built_in">exit</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的步骤做好之后，执行<code>sudo chmod 755 /etc/init.d/tomcat</code>，让这个文件是可执行的。然后要做一个链接，即让刚刚那个shell文件能开机自启动。<br><code>sudo ln -s /etc/init.d/tomcat  /etc/rc1.d/K99tomcat</code><br><code>sudo ln -s /etc/init.d/tomcat  /etc/rc2.d/S99tomcat</code></p>
+<p>大事告成。在终端中执行sudo /etc/init.d/tomcat7 start/stop/restart(三个选一个就能实现启动，停止，重启功能了）<br>另外，对tomcat7也要做一点的修改，在tomcat的conf目录下，打开tomcat-users.xml，在最后那段，现把role前的箭头<!--去掉（就是去掉注释），将user后的箭头-->也去掉，然后如下面配置<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"admin-gui"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"manager-gui"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">user</span> <span class="attribute">username</span>=<span class="value">"rickey"</span> <span class="attribute">password</span>=<span class="value">"5201314"</span> <span class="attribute">roles</span>=<span class="value">"admin-gui"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">user</span> <span class="attribute">username</span>=<span class="value">"rickey"</span> <span class="attribute">password</span>=<span class="value">"5201314"</span> <span class="attribute">roles</span>=<span class="value">"manager-gui"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/10/31/展讯平台备忘录/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">展讯平台备忘录</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Ubuntu下配置tomcat开机启动" data-title="Ubuntu下配置tomcat开机启动" data-url="http://yoursite.com/2015/11/08/Ubuntu下配置tomcat开机启动/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wwb443872831"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
 
 </div>
       <footer id="footer">
@@ -561,9 +614,9 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false
 	}
